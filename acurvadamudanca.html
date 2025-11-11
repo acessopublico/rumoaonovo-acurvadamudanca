@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Curva da Mudança Brasfort: entenda os 8 estágios da adaptação e como superar cada fase com sucesso.">
+    <title>Curva da Mudança | Brasfort Segurança</title>
+    
+    <!-- Fontes e ícones -->
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --azul-brasfort: #263868;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Barlow', sans-serif;
+            background: #f5f7fa;
+            color: #2d2d2d;
+            line-height: 1.7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        /* Overlay escurecido */
+        .overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          backdrop-filter: blur(3px);
+          z-index: 900;
+          display: none;
+        }
+        .overlay.active {
+          display: block;
+        }
+        /* Painel de ajuda */
+        .help-panel {
+          display: none;
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 90%;
+          max-width: 500px;
+          background: #fff;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+          border-radius: 16px;
+          padding: 24px;
+          z-index: 1000;
+        }
+        .help-panel.active {
+          display: block;
+          animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translate(-50%, -45%); }
+          to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+        .help-panel h3 {
+          text-align: center;
+          color: #263868;
+          margin-bottom: 8px;
+        }
+        .help-panel p {
+          text-align: center;
+          font-style: italic;
+          color: #555;
+          margin-bottom: 16px;
+        }
+        .help-panel ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+        .help-panel li {
+          display: flex;
+          align-items: flex-start;
+          gap: 10px;
+          padding: 10px 0;
+          border-bottom: 1px solid #eee;
+        }
+        .help-panel li:last-child {
+          border-bottom: none;
+        }
+        .help-panel li i {
+          color: #263868;
+          font-size: 1.2em;
+          margin-top: 2px;
+        }
+        .help-panel li div {
+          color: #333;
+          line-height: 1.4;
+        }
+        /* Hero */
+        .hero {
+            background: linear-gradient(rgba(0,48,135,0.9), rgba(0,48,135,0.95)),
+                        url('https://www.brasfort.com.br/images/2020/10/11/whatsapp-image-2020-08-21-at-21.33.59.jpeg') center/cover no-repeat;
+            color: white;
+            text-align: center;
+            padding: 160px 20px 80px;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+        /* Curva */
+        .curva-container {
+            max-width: 1000px;
+            margin: -60px auto 80px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+        .curva-box {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+        }
+        .curva-box img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        /* -------------------- CARDS / CARROSSEL -------------------- */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            overflow: hidden;
+            padding: 15px 0 40px;
+            margin: 0 auto 80px;
+            font-family: 'Barlow', sans-serif;
+            flex: 1;
+        }
+        .carousel-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 0 15px;
+        }
+        .carousel-header h1 {
+            color: #263868;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .carousel-header p {
+            color: #006199;
+            font-size: clamp(1rem, 3.5vw, 1.2rem);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+            align-items: center;
+            cursor: grab;
+            padding: 10px 0;
+            user-select: none;
+        }
+        .card {
+            flex: 0 0 80%;
+            max-width: 350px;
+            margin: 0 10px;
+            background: #FEFEFE;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.5s, box-shadow 0.5s, opacity 0.5s;
+            opacity: 0.5;
+            transform: scale(0.9);
+            display: flex;
+            flex-direction: column;
+            border: 2px solid transparent;
+        }
+        .card.active {
+            transform: scale(1);
+            opacity: 1;
+            box-shadow: 0 15px 35px rgba(38, 56, 104, 0.2);
+            border-color: #D2AE6D;
+        }
+        .card-header {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .card.active img {
+            transform: scale(1.05);
+        }
+        .card-number {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #263868;
+            color: #FEFEFE;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .card-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex-grow: 1;
+            font-size: 0.95rem;
+        }
+        .card-content h3 {
+            margin: 0;
+            font-size: 1.3em;
+            color: #263868;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+        .card-content .quote {
+            font-style: italic;
+            color: #006199;
+            font-weight: 600;
+            font-size: 1.05em;
+            border-left: 3px solid #D2AE6D;
+            padding-left: 10px;
+        }
+        .card-content p {
+            margin: 0;
+            font-size: 0.9em;
+            color: #555;
+            line-height: 1.5;
+        }
+        .section-title {
+            font-weight: 600;
+            color: #006199;
+            display: inline-block;
+        }
+        .carousel-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .arrow {
+            background: #263868;
+            color: #FEFEFE;
+            border: none;
+            font-size: 1.4em;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        .arrow:hover {
+            background: #0096D1;
+            transform: scale(1.1);
+        }
+        .indicators {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #A9ABAE;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .indicator.active {
+            background: #263868;
+            transform: scale(1.3);
+        }
+        /* Rodapé */
+        footer {
+          background: #f3f4f6;
+          padding: 20px 20px 30px 20px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: auto;
+        }
+        footer button {
+          background: #263868;
+          color: white;
+          border: none;
+          border-radius: 25px;
+          padding: 12px 20px;
+          font-size: 1rem;
+          font-family: 'Barlow', sans-serif;
+          cursor: pointer;
+          transition: 0.3s;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        footer button:hover {
+          background: #1c2b4e;
+        }
+        /* Card central */
+        .discover-card {
+          background: white;
+          border-radius: 20px;
+          padding: 18px 30px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          cursor: pointer;
+          transition: transform 0.2s, box-shadow 0.2s;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          color: #263868;
+          font-weight: 600;
+        }
+        .discover-card:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+        .discover-card i {
+          font-size: 1.2em;
+          color: #263868;
+        }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.4rem; }
+            .hero p { font-size: 1.1rem; }
+            footer {
+              flex-direction: column;
+              gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+    <!-- Painel de Ajuda -->
+    <div class="help-panel" id="helpPanel">
+      <h3>PARA QUEM PEDIR AJUDA</h3>
+      <p>“Escolha o apoio certo”</p>
+      <ul>
+        <li><i class="fas fa-user-tie"></i> <div><strong>Líder imediato:</strong> remove obstáculos ou aprova ações.</div></li>
+        <li><i class="fas fa-hands-helping"></i> <div><strong>Mentor de pares do setor:</strong> dúvidas práticas de execução, “mão na massa”.</div></li>
+        <li><i class="fas fa-users"></i> <div><strong>Plantão Gente & Gestão:</strong> entendimento da mudança ou do fluxo.</div></li>
+        <li><i class="fas fa-clipboard-check"></i> <div><strong>Qualidade (POP/Checklist):</strong> “qual é o padrão correto?”.</div></li>
+        <li><i class="fas fa-laptop-code"></i> <div><strong>TI / Sistemas (Sankhya, PontoTel, PL):</strong> problemas de acesso, erro ou tela.</div></li>
+      </ul>
+    </div>
+ 
+    <!-- Hero -->
+    <section class="hero">
+        <h1>Curva da Mudança</h1>
+        <p>Conheça os 8 estágios emocionais que toda equipe enfrenta ao adotar algo novo — e como transformar resistência em engajamento.</p>
+    </section>
+    <!-- Curva -->
+    <div class="curva-container">
+        <div class="curva-box" data-aos="zoom-in">
+            <img src="https://i.postimg.cc/kXcydBVq/Brasfort-Curva-da-Mudanca-05b.png" alt="Curva da Mudança Brasfort" loading="lazy">
+        </div>
+    </div>
+    <!-- CARDS - Estágios da Jornada -->
+    <div class="carousel-container">
+        <div class="carousel-header">
+            <h1>Estágios da Jornada</h1>
+            <p>Entenda as fases do processo de adaptação às mudanças organizacionais</p>
+        </div>
+        <div class="carousel-track"></div>
+        <div class="carousel-controls">
+            <button class="arrow left" aria-label="Anterior"><i class="fa-solid fa-chevron-left"></i></button>
+            <div class="indicators"></div>
+            <button class="arrow right" aria-label="Próximo"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+    </div>
+ 
+    <!-- Rodapé -->
+    <footer>
+      <button id="backButton"><i class="fas fa-arrow-left"></i> Voltar</button>
+      <div class="discover-card" id="discoverCard">
+        <i class="fas fa-compass"></i> Descobrir em qual estágio eu estou
+      </div>
+      <button id="helpButton"><i class="fas fa-question-circle"></i> Ajuda</button>
+    </footer>
+ 
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+    </script>
+    <!-- Script do carrossel -->
+    <script>
+        const cardData = [
+            { title: "CHOQUE", icon: "fa-bolt", quote: "“Alguma coisa vai mudar!”", image: "https://i.pinimg.com/736x/e1/c0/70/e1c07059ed60c078777925ef0359285d.jpg", description: "É o primeiro impacto. A novidade causa surpresa e questionamentos.", whatHappens: "Você tenta entender o que muda e o que permanece igual.", howToHandle: "Mantenha a calma, evite conclusões precipitadas e busque informações oficiais antes de reagir." },
+            { title: "INCERTEZA", icon: "fa-question", quote: "“Como isso me afetará?”", image: "https://i.pinimg.com/736x/62/10/72/62107221590f07f8859a1df2f79e3c7e.jpg", description: "Surge a dúvida sobre o que a mudança trará de consequências.", whatHappens: "A mente busca respostas e teme o desconhecido.", howToHandle: "Anote suas dúvidas, procure respostas em fontes confiáveis e mantenha sua rotina estável." },
+            { title: "NEGAÇÃO", icon: "fa-ban", quote: "“É maior do que eu imaginava...”", image: "https://i.pinimg.com/736x/e9/af/6d/e9af6d16653f24496a67a5ad2a05e712.jpg", description: "Há resistência. Você compara com o antigo e acredita que o novo não vai funcionar.", whatHappens: "A tendência é se apegar ao que era conhecido.", howToHandle: "Dê uma chance para o novo, observe os resultados e experimente sem julgar." },
+            { title: "CRISE", icon: "fa-triangle-exclamation", quote: "“Pra quê isso?”", image: "https://i.pinimg.com/736x/36/3a/1d/363a1d03ca1642701086a006b9b767aa.jpg", description: "É o ponto de maior desconforto. Surge frustração e vontade de desistir.", whatHappens: "O esforço é alto e os resultados ainda parecem distantes.", howToHandle: "Reduza o ritmo, foque no essencial e peça apoio quando necessário." },
+            { title: "FUGA", icon: "fa-person-running", quote: "“Vou fazer do meu jeito.”", image: "https://i.pinimg.com/736x/25/94/9c/25949ca7f5f0ad42545d888ded865b53.jpg", description: "A resistência aumenta e o engajamento diminui.", whatHappens: "Há dificuldade em aceitar o novo formato.", howToHandle: "Reflita se o incômodo vem da mudança ou da perda de controle e busque diálogo com o líder." },
+            { title: "ACEITAÇÃO", icon: "fa-handshake", quote: "“A ficha caiu!”", image: "https://i.pinimg.com/1200x/69/60/d1/6960d1b7f7f87e81763fe7d81a4b879e.jpg", description: "A compreensão chega e o medo começa a diminuir.", whatHappens: "Você enxerga sentido e se dispõe a tentar.", howToHandle: "Pratique o novo, reconheça avanços e celebre pequenos resultados." },
+            { title: "DECISÃO", icon: "fa-check-circle", quote: "“Faz sentido.”", image: "https://i.pinimg.com/736x/4b/e1/6b/4be16bfdba23a2e7de50054d9efaf264.jpg", description: "O novo começa a se consolidar.", whatHappens: "A confiança aumenta e a adaptação se torna natural.", howToHandle: "Mantenha o novo padrão e compartilhe aprendizados com outros." },
+            { title: "INTEGRAÇÃO", icon: "fa-users", quote: "“Pode funcionar e ser bom.”", image: "https://i.pinimg.com/736x/1c/2f/22/1c2f22dd5b5b7b5c2d91e679be4ec92b.jpg", description: "A mudança é incorporada à rotina e passa a fazer parte da cultura.", whatHappens: "O processo se torna fluido e gera resultados.", howToHandle: "Registre boas práticas, reconheça a evolução e inspire o time pelo exemplo." }
+        ];
+        const track = document.querySelector('.carousel-track');
+        const indicatorsContainer = document.querySelector('.indicators');
+        const nextBtn = document.querySelector('.arrow.right');
+        const prevBtn = document.querySelector('.arrow.left');
+        let currentIndex = 0;
+        let autoRotate;
+        function createCarousel() {
+            track.innerHTML = '';
+            indicatorsContainer.innerHTML = '';
+            cardData.forEach((card, index) => {
+                const el = document.createElement('div');
+                el.className = 'card';
+                el.innerHTML = `
+                    <div class="card-header">
+                        <img src="${card.image}" alt="${card.title}">
+                        <div class="card-number">${index + 1}</div>
+                    </div>
+                    <div class="card-content">
+                        <h3><i class="fa-solid ${card.icon}"></i> ${card.title}</h3>
+                        <div class="quote">${card.quote}</div>
+                        <p><span class="section-title">Descrição:</span> ${card.description}</p>
+                        <p><span class="section-title">O que acontece:</span> ${card.whatHappens}</p>
+                        <p><span class="section-title">Como lidar:</span> ${card.howToHandle}</p>
+                    </div>`;
+                track.appendChild(el);
+                const indicator = document.createElement('div');
+                indicator.className = 'indicator';
+                if (index === 0) indicator.classList.add('active');
+                indicatorsContainer.appendChild(indicator);
+            });
+            updateCarousel();
+            autoRotate = setInterval(nextCard, 4000);
+        }
+        function updateCarousel() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((c, i) => c.classList.toggle('active', i === currentIndex));
+            const indicators = document.querySelectorAll('.indicator');
+            indicators.forEach((ind, i) => ind.classList.toggle('active', i === currentIndex));
+            track.style.transform = `translateX(-${currentIndex * 370}px)`;
+        }
+        function nextCard() {
+            currentIndex = (currentIndex + 1) % cardData.length;
+            updateCarousel();
+        }
+        function prevCard() {
+            currentIndex = (currentIndex - 1 + cardData.length) % cardData.length;
+            updateCarousel();
+        }
+        nextBtn.addEventListener('click', () => { clearInterval(autoRotate); nextCard(); });
+        prevBtn.addEventListener('click', () => { clearInterval(autoRotate); prevCard(); });
+        createCarousel();
+    </script>
+    <!-- Script dos botões do rodapé -->
+    <script>
+      const helpButton = document.getElementById('helpButton');
+      const helpPanel = document.getElementById('helpPanel');
+      const backButton = document.getElementById('backButton');
+      const discoverCard = document.getElementById('discoverCard');
+      const overlay = document.getElementById('overlay');
+      helpButton.addEventListener('click', () => {
+        const active = helpPanel.classList.toggle('active');
+        overlay.classList.toggle('active', active);
+      });
+      overlay.addEventListener('click', () => {
+        helpPanel.classList.remove('active');
+        overlay.classList.remove('active');
+      });
+      backButton.addEventListener('click', () => {
+        window.history.back();
+      });
+      discoverCard.addEventListener('click', () => {
+        window.location.href = 'https://acessopublico.github.io/autoavaliacao/';
+      });
+    </script>
+</body>
+</html>

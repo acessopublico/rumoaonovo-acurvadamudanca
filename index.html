@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Curva da Mudança Brasfort: entenda os 8 estágios da adaptação e como superar cada fase com sucesso.">
     <title>Rumo ao Novo | BRASFORT</title>
-    
+   
     <!-- Fontes e ícones -->
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -25,7 +25,199 @@
             flex-direction: column;
             min-height: 100vh;
         }
-        /* Overlay escurecido */
+        /* ===== ADICIONADO DO SEGUNDO HTML ===== */
+        .fade-out {
+          opacity: 0;
+          transition: opacity 0.6s ease;
+        }
+        /* ===== CARDS DO SEGUNDO HTML ===== */
+        .central-section {
+            /* Espaçamento vertical: padding superior e inferior para separar da seção anterior e próxima */
+            padding: 60px 20px; /* Ajuste aqui para alterar o espaçamento vertical geral da seção central */
+            background: #f5f7fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px; /* Espaçamento vertical entre os cards da seção central */
+        }
+        .card {
+          background: #ffffff;
+          border: 1px solid rgba(0, 0, 0, 0.08);
+          border-radius: 24px;
+          padding: 40px 35px;
+          width: 800px;
+          max-width: 95%;
+          text-align: justify;
+          box-shadow: 0 15px 45px rgba(0, 0, 0, 0.15);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          position: relative;
+          overflow: hidden;
+          animation: fadeInUp 1s ease;
+        }
+        .card:hover {
+          transform: translateY(-6px);
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        }
+        .card::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, rgba(0,150,255,0.08), rgba(255,255,255,0.08));
+          opacity: 0.5;
+          animation: shine 3s infinite;
+        }
+        @keyframes shine {
+          0%, 100% { opacity: 0.4; }
+          50% { opacity: 0.8; }
+        }
+        .central-section h1 {
+          font-size: 1.9rem;
+          margin-bottom: 18px;
+          color: #0d2c68;
+          z-index: 1;
+          position: relative;
+        }
+        .central-section p {
+          font-size: 1.1rem;
+          color: #4f5562;
+          margin-bottom: 30px;
+          line-height: 1.5;
+          z-index: 1;
+          position: relative;
+        }
+        .central-section button {
+          background: linear-gradient(90deg, #006199, #0096d1);
+          border: none;
+          border-radius: 12px;
+          padding: 14px 28px;
+          color: white;
+          font-weight: 600;
+          font-size: 1.1rem;
+          cursor: pointer;
+          transition: transform 0.25s ease, box-shadow 0.25s ease;
+          box-shadow: 0 8px 20px rgba(0, 97, 153, 0.3);
+          z-index: 1;
+          position: relative;
+        }
+        .central-section button:hover {
+          transform: scale(1.08);
+          box-shadow: 0 10px 25px rgba(0, 97, 153, 0.45);
+        }
+        .icon {
+          font-size: 3rem;
+          color: #008fb3;
+          margin-bottom: 15px;
+          animation: pulseGlow 2s infinite;
+          z-index: 1;
+          position: relative;
+        }
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(50px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulseGlow {
+          0%, 100% { text-shadow: 0 0 8px rgba(0,150,255,0.5); }
+          50% { text-shadow: 0 0 18px rgba(0,150,255,0.9); }
+        }
+        @media (max-width: 768px) {
+          .central-section .card { width: 90%; padding: 30px 22px; }
+          .central-section h1 { font-size: 1.6rem; }
+          .central-section p { font-size: 1rem; }
+          .central-section button { font-size: 1rem; padding: 12px 22px; }
+        }
+        /* ===== BOTÃO AJUDA DO SEGUNDO HTML ===== */
+        .help-btn {
+          position: fixed;
+          bottom: 24px;
+          right: 24px;
+          background: #008fb3;
+          color: white;
+          border: none;
+          border-radius: 50px;
+          padding: 16px 22px;
+          font-size: 1rem;
+          font-weight: 600;
+          box-shadow: 0 8px 24px rgba(0, 143, 179, 0.35);
+          cursor: pointer;
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          z-index: 100;
+        }
+        .help-btn:hover {
+          background: #00a7cc;
+          transform: scale(1.08);
+        }
+        /* ===== MODAL DE AJUDA DO SEGUNDO HTML ===== */
+        .help-overlay {
+          position: fixed;
+          inset: 0;
+          background: rgba(0,0,0,0.6);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 0.3s ease;
+          z-index: 200;
+        }
+        .help-overlay.active {
+          opacity: 1;
+          visibility: visible;
+        }
+        .help-modal {
+          background: #ffffff;
+          border-radius: 20px;
+          padding: 30px 35px;
+          width: 500px;
+          max-width: 90%;
+          box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+          animation: fadeInUp 0.4s ease;
+          position: relative;
+        }
+        .help-modal h2 {
+          color: #0d2c68;
+          margin-bottom: 20px;
+          font-size: 1.5rem;
+        }
+        .help-modal ul {
+          text-align: left;
+          list-style: none;
+          padding: 0;
+          margin-bottom: 25px;
+          color: #4f5562;
+        }
+        .help-modal li {
+          margin-bottom: 10px;
+          font-size: 1rem;
+        }
+        .help-modal li::before {
+          content: "• ";
+          color: #0096d1;
+          font-weight: bold;
+        }
+        .close-btn {
+          position: absolute;
+          top: 12px;
+          right: 16px;
+          font-size: 1.3rem;
+          color: #666;
+          cursor: pointer;
+        }
+        .help-modal button {
+          background: #0096d1;
+          border: none;
+          color: #fff;
+          border-radius: 10px;
+          padding: 12px 20px;
+          font-weight: 600;
+          cursor: pointer;
+        }
+        .help-modal button:hover {
+          background: #00b0e0;
+        }
+        /* Overlay escurecido (mantido mas não usado agora) */
         .overlay {
           position: fixed;
           top: 0;
@@ -40,71 +232,13 @@
         .overlay.active {
           display: block;
         }
-        /* Painel de ajuda */
-        .help-panel {
-          display: none;
-          position: fixed;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 90%;
-          max-width: 500px;
-          background: #fff;
-          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
-          border-radius: 16px;
-          padding: 24px;
-          z-index: 1000;
-        }
-        .help-panel.active {
-          display: block;
-          animation: fadeIn 0.3s ease;
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translate(-50%, -45%); }
-          to { opacity: 1; transform: translate(-50%, -50%); }
-        }
-        .help-panel h3 {
-          text-align: center;
-          color: #263868;
-          margin-bottom: 8px;
-        }
-        .help-panel p {
-          text-align: center;
-          font-style: italic;
-          color: #555;
-          margin-bottom: 16px;
-        }
-        .help-panel ul {
-          list-style: none;
-          padding: 0;
-          margin: 0;
-        }
-        .help-panel li {
-          display: flex;
-          align-items: flex-start;
-          gap: 10px;
-          padding: 10px 0;
-          border-bottom: 1px solid #eee;
-        }
-        .help-panel li:last-child {
-          border-bottom: none;
-        }
-        .help-panel li i {
-          color: #263868;
-          font-size: 1.2em;
-          margin-top: 2px;
-        }
-        .help-panel li div {
-          color: #333;
-          line-height: 1.4;
-        }
         /* Hero */
         .hero {
-            background: linear-gradient(rgba(0,48,135,0.9), rgba(0,48,135,0.95)),
+            background: linear-gradient(rgba(38, 56, 104, 0.8), rgba(38, 56, 104, 50)),
                         url('https://www.brasfort.com.br/images/2020/10/11/whatsapp-image-2020-08-21-at-21.33.59.jpeg') center/cover no-repeat;
             color: white;
             text-align: center;
-            padding: 160px 20px 80px;
+            padding: 160px 20px 80px; /* Espaçamento vertical: padding inferior para separar da curva */
         }
         .hero h1 {
             font-size: 3rem;
@@ -119,8 +253,9 @@
         }
         /* Curva */
         .curva-container {
+            /* Espaçamento vertical: margem negativa superior para sobrepor hero, margem inferior para separar do carrossel */
             max-width: 1000px;
-            margin: -60px auto 80px;
+            margin: -60px auto 80px; /* Ajuste aqui para alterar o sobreposição/espaçamento com hero e próximo elemento */
             padding: 0 20px;
             position: relative;
             z-index: 10;
@@ -130,26 +265,88 @@
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+            position: relative; /* Para posicionar botões absolutos */
         }
         .curva-box img {
             width: 100%;
             height: auto;
             display: block;
         }
+        /* Botões para ampliar e baixar a imagem da curva */
+        .curva-actions {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
+            z-index: 20;
+        }
+        .curva-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            font-size: 1rem;
+            color: #263868;
+        }
+        .curva-btn:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+        /* Modal para ampliar imagem da curva */
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .image-modal.active {
+            display: flex;
+        }
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            overflow: auto;
+        }
+        .modal-content img {
+            width: 100%;
+            height: auto;
+        }
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
         /* -------------------- CARDS / CARROSSEL -------------------- */
         .carousel-container {
+            /* Espaçamento vertical: padding inferior para separar da seção central */
             position: relative;
             width: 100%;
             max-width: 1200px;
             overflow: hidden;
-            padding: 15px 0 40px;
-            margin: 0 auto 80px;
+            padding: 15px 0 40px; /* Ajuste padding inferior para espaçamento vertical com próximo elemento */
+            margin: 0 auto 80px; /* Margem inferior para espaçamento geral */
             font-family: 'Barlow', sans-serif;
             flex: 1;
         }
         .carousel-header {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 25px; /* Espaçamento vertical entre header e track */
             padding: 0 15px;
         }
         .carousel-header h1 {
@@ -173,7 +370,7 @@
             padding: 10px 0;
             user-select: none;
         }
-        .card {
+        .card.carousel-card { /* Para diferenciar dos novos cards */
             flex: 0 0 80%;
             max-width: 350px;
             margin: 0 10px;
@@ -189,24 +386,35 @@
             flex-direction: column;
             border: 2px solid transparent;
         }
-        .card.active {
+        .card.carousel-card.active {
             transform: scale(1);
             opacity: 1;
             box-shadow: 0 15px 35px rgba(38, 56, 104, 0.2);
             border-color: #D2AE6D;
+        }
+        /* Responsividade para mobile: cards ocupam 100% da largura, sem margem lateral excessiva */
+        @media (max-width: 768px) {
+            .card.carousel-card {
+                flex: 0 0 90%;
+                max-width: none;
+                margin: 0 5px;
+            }
+            .carousel-track {
+                padding: 10px 5px;
+            }
         }
         .card-header {
             position: relative;
             height: 180px;
             overflow: hidden;
         }
-        .card img {
+        .card.carousel-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s;
         }
-        .card.active img {
+        .card.carousel-card.active img {
             transform: scale(1.05);
         }
         .card-number {
@@ -265,7 +473,7 @@
             align-items: center;
             justify-content: center;
             gap: 15px;
-            margin-top: 20px;
+            margin-top: 20px; /* Espaçamento vertical entre track e controles */
             flex-wrap: wrap;
         }
         .arrow {
@@ -286,6 +494,14 @@
             background: #0096D1;
             transform: scale(1.1);
         }
+        /* Responsividade para mobile: setas maiores e touch-friendly */
+        @media (max-width: 768px) {
+            .arrow {
+                width: 50px;
+                height: 50px;
+                font-size: 1.6em;
+            }
+        }
         .indicators {
             display: flex;
             justify-content: center;
@@ -304,80 +520,45 @@
             background: #263868;
             transform: scale(1.3);
         }
-        /* Rodapé */
-        footer {
-          background: #f3f4f6;
-          padding: 20px 20px 30px 20px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-top: auto;
+        /* Rodapé removido, botão de voltar agora fixo discreto no inferior esquerdo */
+        /* Botão de voltar discreto: fixo bottom-left, pequeno e semi-transparente */
+        .back-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(38, 56, 104, 0.8);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            font-family: 'Barlow', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            z-index: 50;
+            opacity: 0.7;
         }
-        footer button {
-          background: #263868;
-          color: white;
-          border: none;
-          border-radius: 25px;
-          padding: 12px 20px;
-          font-size: 1rem;
-          font-family: 'Barlow', sans-serif;
-          cursor: pointer;
-          transition: 0.3s;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-        footer button:hover {
-          background: #1c2b4e;
-        }
-        /* Card central */
-        .discover-card {
-          background: white;
-          border-radius: 20px;
-          padding: 18px 30px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-          cursor: pointer;
-          transition: transform 0.2s, box-shadow 0.2s;
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          color: #263868;
-          font-weight: 600;
-        }
-        .discover-card:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-        }
-        .discover-card i {
-          font-size: 1.2em;
-          color: #263868;
+        .back-btn:hover {
+            background: #263868;
+            opacity: 1;
+            transform: scale(1.05);
         }
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.4rem; }
             .hero p { font-size: 1.1rem; }
-            footer {
-              flex-direction: column;
-              gap: 12px;
+            .back-btn {
+                bottom: 15px;
+                left: 15px;
+                padding: 6px 10px;
+                font-size: 0.8rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Overlay -->
-    <div class="overlay" id="overlay"></div>
-    <!-- Painel de Ajuda -->
-    <div class="help-panel" id="helpPanel">
-      <h3>PARA QUEM PEDIR AJUDA</h3>
-      <p>“Escolha o apoio certo”</p>
-      <ul>
-        <li><i class="fas fa-user-tie"></i> <div><strong>Líder imediato:</strong> remove obstáculos ou aprova ações.</div></li>
-        <li><i class="fas fa-hands-helping"></i> <div><strong>Mentor de pares do setor:</strong> dúvidas práticas de execução, “mão na massa”.</div></li>
-        <li><i class="fas fa-users"></i> <div><strong>Plantão Gente & Gestão:</strong> entendimento da mudança ou do fluxo.</div></li>
-        <li><i class="fas fa-clipboard-check"></i> <div><strong>Qualidade (POP/Checklist):</strong> “qual é o padrão correto?”.</div></li>
-        <li><i class="fas fa-laptop-code"></i> <div><strong>TI / Sistemas (Sankhya, PontoTel, PL):</strong> problemas de acesso, erro ou tela.</div></li>
-      </ul>
-    </div>
- 
     <!-- Hero -->
     <section class="hero">
         <h1>Curva da Mudança</h1>
@@ -386,7 +567,19 @@
     <!-- Curva -->
     <div class="curva-container">
         <div class="curva-box" data-aos="zoom-in">
-            <img src="https://i.postimg.cc/kXcydBVq/Brasfort-Curva-da-Mudanca-05b.png" alt="Curva da Mudança Brasfort" loading="lazy">
+            <img id="curvaImg" src="https://i.postimg.cc/kXcydBVq/Brasfort-Curva-da-Mudanca-05b.png" alt="Curva da Mudança Brasfort" loading="lazy">
+            <!-- Botões de ação para a imagem da curva -->
+            <div class="curva-actions">
+                <button class="curva-btn" id="zoomBtn" title="Ampliar imagem"><i class="fas fa-search-plus"></i></button>
+                <button class="curva-btn" id="downloadBtn" title="Baixar imagem"><i class="fas fa-download"></i></button>
+            </div>
+        </div>
+    </div>
+    <!-- Modal para ampliar imagem da curva -->
+    <div class="image-modal" id="imageModal">
+        <span class="close-modal" id="closeModal">&times;</span>
+        <div class="modal-content">
+            <img id="modalImg" src="" alt="Imagem ampliada">
         </div>
     </div>
     <!-- CARDS - Estágios da Jornada -->
@@ -402,22 +595,58 @@
             <button class="arrow right" aria-label="Próximo"><i class="fa-solid fa-chevron-right"></i></button>
         </div>
     </div>
- 
-    <!-- Rodapé -->
-    <footer>
-      <button id="backButton"><i class="fas fa-arrow-left"></i> Voltar</button>
-      <div class="discover-card" id="discoverCard">
-        <i class="fas fa-compass"></i> Descobrir em qual estágio eu estou
+    <!-- NOVA SEÇÃO: Central de Ideias e Mudança -->
+    <div class="central-section">
+      <!-- 🔹 Card 1 - Ideias e Sugestões -->
+      <div class="card" id="idea-card">
+        <i class="fa-solid fa-lightbulb icon"></i>
+        <h1>Teve alguma ideia ou sugestão interessante?</h1>
+        <p>Quer contribuir para melhorar processos, iniciativas ou rotinas? Compartilhe sua ideia com a gente!</p>
+        <button id="register-btn">
+          <i class="fa-solid fa-pen-to-square"></i> Registrar aqui
+        </button>
       </div>
-      <button id="helpButton"><i class="fas fa-question-circle"></i> Ajuda</button>
-    </footer>
- 
+      <!-- 🔹 Card 2 - Curva da Mudança -->
+      <div class="card" id="change-card">
+        <i class="fa-solid fa-wand-magic-sparkles icon"></i>
+        <h1>Em qual estágio da Curva da Mudança você está?</h1>
+        <p>Será que você ainda está resistindo, se adaptando ou já dominou o novo? Descubra em poucos segundos.</p>
+        <button id="discover-btn">
+          <i class="fa-solid fa-magnifying-glass-chart"></i> Descobrir agora →
+        </button>
+      </div>
+    </div>
+    <!-- 🔸 Botão flutuante de Ajuda -->
+    <button class="help-btn" id="helpBtn">
+      <i class="fa-solid fa-circle-question"></i> Para quem pedir ajuda
+    </button>
+    <!-- 🔸 Modal de Ajuda -->
+    <div class="help-overlay" id="helpOverlay">
+      <div class="help-modal">
+        <i class="fa-solid fa-xmark close-btn" id="closeHelp"></i>
+        <h2>Escolha o apoio certo</h2>
+        <ul>
+          <li><strong>Líder imediato:</strong> remove obstáculos ou aprova ações.</li>
+          <li><strong>Mentor de pares do setor:</strong> dúvidas práticas de execução, “mão na massa”.</li>
+          <li><strong>Plantão Gente & Gestão:</strong> entendimento da mudança ou do fluxo.</li>
+          <li><strong>Qualidade (POP/Checklist):</strong> “qual é o padrão correto?”.</li>
+          <li><strong>TI / Sistemas (Sankhya, PontoTel, PL):</strong> problemas de acesso, erro ou tela.</li>
+        </ul>
+        <button id="contactGG">
+          <i class="fa-solid fa-comments"></i> Falar com Gente & Gestão
+        </button>
+      </div>
+    </div>
+    <!-- Botão de voltar discreto -->
+    <button class="back-btn" id="backButton">
+        <i class="fas fa-arrow-left"></i> Voltar
+    </button>
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({ duration: 800, once: true });
     </script>
-    <!-- Script do carrossel -->
+    <!-- Script do carrossel: fluxo infinito mantido, para auto-rotate ao clicar nas setas, responsivo via CSS -->
     <script>
         const cardData = [
             { title: "CHOQUE", icon: "fa-bolt", quote: "“Alguma coisa vai mudar!”", image: "https://i.pinimg.com/736x/e1/c0/70/e1c07059ed60c078777925ef0359285d.jpg", description: "É o primeiro impacto. A novidade causa surpresa e questionamentos.", whatHappens: "Você tenta entender o que muda e o que permanece igual.", howToHandle: "Mantenha a calma, evite conclusões precipitadas e busque informações oficiais antes de reagir." },
@@ -440,7 +669,7 @@
             indicatorsContainer.innerHTML = '';
             cardData.forEach((card, index) => {
                 const el = document.createElement('div');
-                el.className = 'card';
+                el.className = 'card carousel-card';
                 el.innerHTML = `
                     <div class="card-header">
                         <img src="${card.image}" alt="${card.title}">
@@ -460,14 +689,16 @@
                 indicatorsContainer.appendChild(indicator);
             });
             updateCarousel();
-            autoRotate = setInterval(nextCard, 4000);
+            autoRotate = setInterval(nextCard, 4000); // Inicia auto-rotate
         }
         function updateCarousel() {
-            const cards = document.querySelectorAll('.card');
+            const cards = document.querySelectorAll('.card.carousel-card');
             cards.forEach((c, i) => c.classList.toggle('active', i === currentIndex));
             const indicators = document.querySelectorAll('.indicator');
             indicators.forEach((ind, i) => ind.classList.toggle('active', i === currentIndex));
-            track.style.transform = `translateX(-${currentIndex * 370}px)`;
+            // Ajuste responsivo no translateX: usa largura dinâmica para mobile
+            const cardWidth = window.innerWidth <= 768 ? window.innerWidth - 40 : 370; // 40px para padding/margins em mobile
+            track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
         }
         function nextCard() {
             currentIndex = (currentIndex + 1) % cardData.length;
@@ -477,33 +708,113 @@
             currentIndex = (currentIndex - 1 + cardData.length) % cardData.length;
             updateCarousel();
         }
-        nextBtn.addEventListener('click', () => { clearInterval(autoRotate); nextCard(); });
-        prevBtn.addEventListener('click', () => { clearInterval(autoRotate); prevCard(); });
+        nextBtn.addEventListener('click', () => { 
+            clearInterval(autoRotate); // Para auto-rotate ao clicar
+            nextCard(); 
+        });
+        prevBtn.addEventListener('click', () => { 
+            clearInterval(autoRotate); // Para auto-rotate ao clicar
+            prevCard(); 
+        });
+        // Re-inicia auto-rotate após 10s de inatividade (opcional, para facilitar movimento)
+        let inactivityTimer;
+        function resetInactivity() {
+            clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(() => {
+                autoRotate = setInterval(nextCard, 4000);
+            }, 10000);
+        }
+        nextBtn.addEventListener('click', resetInactivity);
+        prevBtn.addEventListener('click', resetInactivity);
+        // Suporte a teclado para facilitar navegação
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                clearInterval(autoRotate);
+                nextCard();
+                resetInactivity();
+            } else if (e.key === 'ArrowLeft') {
+                clearInterval(autoRotate);
+                prevCard();
+                resetInactivity();
+            }
+        });
         createCarousel();
+        // Atualiza translateX em resize para responsividade
+        window.addEventListener('resize', updateCarousel);
     </script>
-    <!-- Script dos botões do rodapé -->
+    <!-- Script para ampliar e baixar imagem da curva -->
     <script>
-      const helpButton = document.getElementById('helpButton');
-      const helpPanel = document.getElementById('helpPanel');
+        const zoomBtn = document.getElementById('zoomBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const imageModal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImg');
+        const closeModal = document.getElementById('closeModal');
+        const curvaImg = document.getElementById('curvaImg');
+
+        zoomBtn.addEventListener('click', () => {
+            modalImg.src = curvaImg.src;
+            imageModal.classList.add('active');
+        });
+
+        downloadBtn.addEventListener('click', () => {
+            const a = document.createElement('a');
+            a.href = curvaImg.src;
+            a.download = 'curva-da-mudanca-brasfort.png';
+            a.click();
+        });
+
+        closeModal.addEventListener('click', () => {
+            imageModal.classList.remove('active');
+        });
+
+        imageModal.addEventListener('click', (e) => {
+            if (e.target === imageModal) {
+                imageModal.classList.remove('active');
+            }
+        });
+    </script>
+    <!-- Script dos novos botões (do segundo HTML, adaptado) -->
+    <script>
+      const registerBtn = document.getElementById('register-btn');
+      const discoverBtn = document.getElementById('discover-btn');
+      const body = document.body;
+      registerBtn.addEventListener('click', () => {
+        body.classList.add('fade-out');
+        setTimeout(() => {
+          window.location.href = "https://pro.brasfort.com.br/v4/solicita_facil/formulario_resposta.php?token=c9db8f9fa9b8bccb28acb108e1d07a3c";
+        }, 600);
+      });
+      discoverBtn.addEventListener('click', () => {
+        body.classList.add('fade-out');
+        setTimeout(() => {
+          window.location.href = 'https://acessopublico.github.io/autoavaliacao/';
+        }, 600);
+      });
+      // Modal de ajuda
+      const helpBtn = document.getElementById('helpBtn');
+      const helpOverlay = document.getElementById('helpOverlay');
+      const closeHelp = document.getElementById('closeHelp');
+      const contactGG = document.getElementById('contactGG');
+      helpBtn.addEventListener('click', () => {
+        helpOverlay.classList.add('active');
+      });
+      closeHelp.addEventListener('click', () => {
+        helpOverlay.classList.remove('active');
+      });
+      contactGG.addEventListener('click', () => {
+        helpOverlay.classList.remove('active');
+        body.classList.add('fade-out');
+        setTimeout(() => {
+          window.location.href = "https://pro.brasfort.com.br/v4/solicita_facil/formulario_resposta.php?token=c9db8f9fa9b8bccb28acb108e1d07a3c"; // Página destino
+        }, 600);
+      });
+    </script>
+    <!-- Script do botão voltar (adaptado para classe back-btn) -->
+    <script>
       const backButton = document.getElementById('backButton');
-      const discoverCard = document.getElementById('discoverCard');
-      const overlay = document.getElementById('overlay');
-      helpButton.addEventListener('click', () => {
-        const active = helpPanel.classList.toggle('active');
-        overlay.classList.toggle('active', active);
-      });
-      overlay.addEventListener('click', () => {
-        helpPanel.classList.remove('active');
-        overlay.classList.remove('active');
-      });
       backButton.addEventListener('click', () => {
         window.history.back();
-      });
-      discoverCard.addEventListener('click', () => {
-        window.location.href = 'https://acessopublico.github.io/autoavaliacao/';
       });
     </script>
 </body>
 </html>
-
-
